@@ -37,6 +37,20 @@
                 android:layout_gravity="bottom"
                 android:background="@drawable/gradient_scrim" />
 
+            <!-- A CollapsingToolbarLayout-ban a Toolbar előtt -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/favorite_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/spacing_medium"
+                android:src="@drawable/ic_favorite_border"
+                android:contentDescription="@string/add_to_favorites"
+                app:tint="@color/white"
+                app:backgroundTint="@color/primary"
+                app:layout_collapseMode="pin" />
+
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"

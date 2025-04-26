@@ -20,4 +20,9 @@
     <dimen name="card_corner_radius">8dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
 
+    <!-- Kosár és rendelés elemek -->
+    <dimen name="cart_item_height">100dp</dimen>
+    <dimen name="order_card_height">120dp</dimen>
+    <dimen name="address_card_height">80dp</dimen>
+
 </resources>

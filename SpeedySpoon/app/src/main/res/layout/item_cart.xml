@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_medium"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cart_item_height"
+        android:padding="@dimen/spacing_medium">
+
+        <ImageView
+            android:id="@+id/item_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/textPrimary"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@id/item_image"
+            app:layout_constraintEnd_toStartOf="@id/item_price"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Margherita Pizza" />
+
+        <TextView
+            android:id="@+id/item_restaurant"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:textSize="14sp"
+            android:textColor="@color/textSecondary"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@id/item_image"
+            app:layout_constraintEnd_toStartOf="@id/item_price"
+            app:layout_constraintTop_toBottomOf="@id/item_name"
+            tools:text="Olasz Konyha" />
+
+        <TextView
+            android:id="@+id/item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2500 Ft" />
+
+        <LinearLayout
+            android:id="@+id/quantity_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/spacing_medium"
+            app:layout_constraintStart_toEndOf="@id/item_image"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageButton
+                android:id="@+id/decrease_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_remove"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/decrease_quantity" />
+
+            <TextView
+                android:id="@+id/item_quantity"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/textPrimary"
+                tools:text="1" />
+
+            <ImageButton
+                android:id="@+id/increase_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_add"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/increase_quantity" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/remove_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remove_item"
+            android:textSize="12sp"
+            android:textColor="@color/error"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

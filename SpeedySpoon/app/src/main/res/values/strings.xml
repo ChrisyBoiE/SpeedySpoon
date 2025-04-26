@@ -59,7 +59,6 @@
     <string name="open_now">Most nyitva</string>
     <string name="delivery_time">Kiszállítási idő: %1$d-%2$d perc</string>
     <string name="min_order">Minimum rendelés: %1$s Ft</string>
-    <string name="delivery_fee">Kiszállítási díj: %1$s Ft</string>
     <string name="rating_count">(%1$d értékelés)</string>
     <string name="restaurant_details">Étterem részletei</string>
     <string name="menu">Menü</string>
@@ -78,5 +77,73 @@
     <string name="sunday">Vasárnap</string>
     <string name="closed">Zárva</string>
     <string name="add_to_cart">Kosárba</string>
+
+    <!-- Kosár és rendelés -->
+    <string name="cart_title">Kosár</string>
+    <string name="cart_empty">A kosarad üres</string>
+    <string name="cart_empty_message">Böngéssz az éttermek között és adj hozzá ételeket a kosaradhoz</string>
+    <string name="browse_restaurants">Éttermek böngészése</string>
+    <string name="item_quantity">%1$d db</string>
+    <string name="remove_item">Eltávolítás</string>
+    <string name="subtotal">Részösszeg</string>
+    <string name="delivery_fee">Kiszállítási díj</string>
+    <string name="total">Összesen</string>
+    <string name="checkout">Fizetés</string>
+    <string name="continue_shopping">Vásárlás folytatása</string>
+    <string name="order_summary">Rendelés összesítő</string>
+    <string name="change_address">Cím módosítása</string>
+    <string name="add_new_address">Új cím hozzáadása</string>
+    <string name="payment_method">Fizetési mód</string>
+    <string name="cash_on_delivery">Készpénzes fizetés</string>
+    <string name="credit_card">Bankkártya</string>
+    <string name="place_order">Rendelés leadása</string>
+    <string name="order_placed">Rendelés leadva!</string>
+    <string name="order_placed_message">A rendelésedet sikeresen rögzítettük. Kövesd nyomon a rendelésed állapotát!</string>
+    <string name="track_order">Rendelés követése</string>
+    <string name="my_orders">Rendeléseim</string>
+    <string name="order_number">Rendelés #%1$s</string>
+    <string name="order_date">Dátum: %1$s</string>
+    <string name="order_status">Állapot: %1$s</string>
+    <string name="order_total">Összesen: %1$s Ft</string>
+    <string name="order_items">%1$d tétel</string>
+    <string name="order_again">Újrarendelés</string>
+    <string name="order_details">Rendelés részletei</string>
+    <string name="status_pending">Feldolgozás alatt</string>
+    <string name="status_delivering">Kiszállítás alatt</string>
+    <string name="status_completed">Kiszállítva</string>
+    <string name="status_cancelled">Törölve</string>
+    <string name="estimated_delivery">Várható kiszállítás: %1$s</string>
+    <string name="address_title">Címek kezelése</string>
+    <string name="address_name">Cím neve (pl. Otthon, Munkahely)</string>
+    <string name="address_street">Utca, házszám</string>
+    <string name="address_city">Város</string>
+    <string name="address_zip">Irányítószám</string>
+    <string name="address_save">Cím mentése</string>
+    <string name="address_delete">Cím törlése</string>
+    <string name="address_set_default">Beállítás alapértelmezettként</string>
+    <string name="address_default">Alapértelmezett</string>
+    <string name="increase_quantity">Mennyiség növelése</string>
+    <string name="decrease_quantity">Mennyiség csökkentése</string>
+    <string name="address_edit">Szerkesztés</string>
+
+    <!-- Kedvencek és személyre szabás -->
+    <string name="favorites_title">Kedvencek</string>
+    <string name="favorites_empty">Még nincsenek kedvenc éttermeid</string>
+    <string name="favorites_empty_message">Jelölj meg éttermeket kedvencként a gyorsabb eléréshez</string>
+    <string name="recommended_for_you">Ajánlott neked</string>
+    <string name="based_on_previous_orders">Korábbi rendeléseid alapján</string>
+    <string name="preferences_title">Étkezési preferenciák</string>
+    <string name="preferences_subtitle">Válaszd ki az étkezési preferenciáidat, hogy személyre szabott ajánlatokat kapj</string>
+    <string name="preference_vegetarian">Vegetáriánus</string>
+    <string name="preference_vegan">Vegán</string>
+    <string name="preference_gluten_free">Gluténmentes</string>
+    <string name="preference_lactose_free">Laktózmentes</string>
+    <string name="preference_low_carb">Alacsony szénhidráttartalmú</string>
+    <string name="preference_spicy">Csípős</string>
+    <string name="preference_save">Preferenciák mentése</string>
+    <string name="preference_saved">Preferenciák sikeresen mentve!</string>
+    <string name="add_to_favorites">Hozzáadás a kedvencekhez</string>
+    <string name="remove_from_favorites">Eltávolítás a kedvencekből</string>
+    <string name="you_might_like">Ezek is tetszhetnek</string>
 
 </resources>

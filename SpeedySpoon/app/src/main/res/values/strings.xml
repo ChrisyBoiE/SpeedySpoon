@@ -146,4 +146,64 @@
     <string name="remove_from_favorites">Eltávolítás a kedvencekből</string>
     <string name="you_might_like">Ezek is tetszhetnek</string>
 
+    <!-- Étterem kezelés -->
+    <string name="restaurant_dashboard">Étterem irányítópult</string>
+    <string name="restaurant_profile">Étterem profil</string>
+    <string name="restaurant_orders">Rendelések</string>
+    <string name="restaurant_menu">Étlap</string>
+    <string name="restaurant_settings">Beállítások</string>
+    <string name="restaurant_statistics">Statisztikák</string>
+    <string name="restaurant_online">Online</string>
+    <string name="restaurant_offline">Offline</string>
+    <string name="restaurant_status">Étterem állapota</string>
+    <string name="restaurant_status_description">Ha offline állapotba kapcsolsz, az éttermed nem lesz elérhető a felhasználók számára</string>
+    <string name="new_orders">Új rendelések</string>
+    <string name="in_progress_orders">Folyamatban lévő rendelések</string>
+    <string name="completed_orders">Teljesített rendelések</string>
+    <string name="cancelled_orders">Törölt rendelések</string>
+    <string name="accept_order">Rendelés elfogadása</string>
+    <string name="reject_order">Rendelés elutasítása</string>
+    <string name="mark_as_ready">Elkészült</string>
+    <string name="mark_as_delivered">Kiszállítva</string>
+    <string name="edit_profile">Profil szerkesztése</string>
+    <string name="save_changes">Változtatások mentése</string>
+    <string name="restaurant_name">Étterem neve</string>
+    <string name="restaurant_description">Étterem leírása</string>
+    <string name="restaurant_category">Kategória</string>
+    <string name="restaurant_address">Cím</string>
+    <string name="restaurant_phone">Telefonszám</string>
+    <string name="restaurant_email">Email cím</string>
+    <string name="restaurant_website">Weboldal</string>
+    <string name="restaurant_opening_hours">Nyitvatartás</string>
+    <string name="add_menu_item">Új étel hozzáadása</string>
+    <string name="edit_menu_item">Étel szerkesztése</string>
+    <string name="item_name">Étel neve</string>
+    <string name="item_description">Étel leírása</string>
+    <string name="item_price">Ár</string>
+    <string name="item_category">Kategória</string>
+    <string name="item_image">Kép</string>
+    <string name="select_image">Kép kiválasztása</string>
+    <string name="delete_item">Étel törlése</string>
+    <string name="add_category">Új kategória</string>
+    <string name="category_name">Kategória neve</string>
+    <string name="min_order_amount">Minimum rendelési összeg</string>
+    <string name="estimated_delivery_time">Becsült kiszállítási idő</string>
+    <string name="min_time">Minimum idő (perc)</string>
+    <string name="max_time">Maximum idő (perc)</string>
+    <string name="today_orders">Mai rendelések</string>
+    <string name="today_revenue">Mai bevétel</string>
+    <string name="total_orders">Összes rendelés</string>
+    <string name="average_rating">Átlagos értékelés</string>
+    <string name="order_accepted">Rendelés elfogadva</string>
+    <string name="order_rejected">Rendelés elutasítva</string>
+    <string name="order_ready">Rendelés elkészült</string>
+    <string name="order_delivered">Rendelés kiszállítva</string>
+    <string name="confirm_action">Megerősítés</string>
+    <string name="confirm_reject_order">Biztosan elutasítod ezt a rendelést?</string>
+    <string name="confirm_delete_item">Biztosan törlöd ezt az ételt?</string>
+    <string name="yes">Igen</string>
+    <string name="no">Nem</string>
+    <string name="cancel">Mégse</string>
+
+
 </resources>

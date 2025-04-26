@@ -36,4 +36,47 @@
     <string name="registration_success">Sikeres regisztráció!</string>
     <string name="login_success">Sikeres bejelentkezés!</string>
     <string name="profile_updated">A profil sikeresen frissítve!</string>
+
+    <!-- Éttermek böngészése -->
+    <string name="restaurants_title">Éttermek</string>
+    <string name="search_hint">Keresés éttermek között…</string>
+    <string name="filter_title">Szűrés</string>
+    <string name="sort_by">Rendezés</string>
+    <string name="filter_by">Szűrés</string>
+    <string name="category_all">Összes</string>
+    <string name="category_italian">Olasz</string>
+    <string name="category_asian">Ázsiai</string>
+    <string name="category_fast_food">Gyorsétterem</string>
+    <string name="category_vegetarian">Vegetáriánus</string>
+    <string name="category_dessert">Desszert</string>
+    <string name="sort_rating">Értékelés</string>
+    <string name="sort_distance">Távolság</string>
+    <string name="sort_price">Ár</string>
+    <string name="filter_price_range">Árkategória</string>
+    <string name="filter_min_rating">Minimum értékelés</string>
+    <string name="apply_filters">Szűrés alkalmazása</string>
+    <string name="reset_filters">Alaphelyzet</string>
+    <string name="open_now">Most nyitva</string>
+    <string name="delivery_time">Kiszállítási idő: %1$d-%2$d perc</string>
+    <string name="min_order">Minimum rendelés: %1$s Ft</string>
+    <string name="delivery_fee">Kiszállítási díj: %1$s Ft</string>
+    <string name="rating_count">(%1$d értékelés)</string>
+    <string name="restaurant_details">Étterem részletei</string>
+    <string name="menu">Menü</string>
+    <string name="reviews">Értékelések</string>
+    <string name="info">Információk</string>
+    <string name="opening_hours">Nyitvatartás</string>
+    <string name="address">Cím</string>
+    <string name="phone">Telefon</string>
+    <string name="website">Weboldal</string>
+    <string name="monday">Hétfő</string>
+    <string name="tuesday">Kedd</string>
+    <string name="wednesday">Szerda</string>
+    <string name="thursday">Csütörtök</string>
+    <string name="friday">Péntek</string>
+    <string name="saturday">Szombat</string>
+    <string name="sunday">Vasárnap</string>
+    <string name="closed">Zárva</string>
+    <string name="add_to_cart">Kosárba</string>
+
 </resources>

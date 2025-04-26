@@ -12,4 +12,12 @@
 
     <!-- Profilkép mérete -->
     <dimen name="profile_image_size">120dp</dimen>
+
+    <!-- Étterem lista elemek -->
+    <dimen name="restaurant_card_height">200dp</dimen>
+    <dimen name="restaurant_image_height">120dp</dimen>
+    <dimen name="category_chip_height">32dp</dimen>
+    <dimen name="card_corner_radius">8dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+
 </resources>

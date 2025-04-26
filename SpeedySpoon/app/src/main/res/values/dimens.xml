@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Térközök -->
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_medium">16dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_xlarge">32dp</dimen>
+
+    <!-- Gombok és érintési felületek -->
+    <dimen name="button_height">56dp</dimen>
+    <dimen name="min_touch_target">48dp</dimen>
+
+    <!-- Profilkép mérete -->
+    <dimen name="profile_image_size">120dp</dimen>
+</resources>

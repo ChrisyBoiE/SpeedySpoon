@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Alap színek -->
+    <color name="primary">#FF5722</color> <!-- Narancs, étvágygerjesztő szín -->
+    <color name="primaryDark">#E64A19</color>
+    <color name="accent">#4CAF50</color> <!-- Zöld, frissességet sugall -->
+
+    <!-- Semleges színek -->
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
+    <color name="divider">#BDBDBD</color>
+    <color name="background">#FAFAFA</color>
+    <color name="white">#FFFFFF</color>
+    <color name="error">#F44336</color>
 </resources>

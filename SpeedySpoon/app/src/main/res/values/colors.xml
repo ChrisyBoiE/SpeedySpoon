@@ -40,4 +40,12 @@
     <color name="favoriteInactive">#BDBDBD</color>
     <color name="preferenceSelected">#E3F2FD</color>
     <color name="preferenceUnselected">#F5F5F5</color>
+
+    <!-- Étterem kezelés színek -->
+    <color name="restaurantOnline">#4CAF50</color>
+    <color name="restaurantOffline">#F44336</color>
+    <color name="orderNew">#2196F3</color>
+    <color name="orderInProgress">#FF9800</color>
+    <color name="orderCompleted">#4CAF50</color>
+    <color name="orderCancelled">#F44336</color>
 </resources>

@@ -1,3 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SpeedySpoon</string>
+    <string name="app_logo">SpeedySpoon Logo</string>
+
+    <!-- Regisztráció és bejelentkezés -->
+    <string name="register_title">Regisztráció</string>
+    <string name="login_title">Bejelentkezés</string>
+    <string name="hint_name">Teljes név</string>
+    <string name="hint_email">Email cím</string>
+    <string name="hint_password">Jelszó</string>
+    <string name="btn_register">Regisztráció</string>
+    <string name="btn_login">Bejelentkezés</string>
+    <string name="already_have_account">Már van fiókod? Jelentkezz be!</string>
+    <string name="no_account_yet">Még nincs fiókod? Regisztrálj most!</string>
+
+    <!-- Profil szerkesztés -->
+    <string name="profile_edit_title">Profil szerkesztése</string>
+    <string name="change_photo">Profilkép módosítása</string>
+    <string name="personal_info">Személyes adatok</string>
+    <string name="delivery_address">Szállítási cím</string>
+    <string name="hint_address">Cím (utca, házszám)</string>
+    <string name="hint_city">Város</string>
+    <string name="hint_phone">Telefonszám</string>
+    <string name="btn_save">Mentés</string>
+
+    <!-- Hibaüzenetek -->
+    <string name="error_name_required">A név megadása kötelező</string>
+    <string name="error_email_required">Az email cím megadása kötelező</string>
+    <string name="error_invalid_email">Érvénytelen email cím</string>
+    <string name="error_password_required">A jelszó megadása kötelező</string>
+    <string name="error_password_too_short">A jelszó túl rövid (min. 6 karakter)</string>
+    <string name="error_required_fields">A kötelező mezők kitöltése szükséges</string>
+
+    <!-- Visszajelzések -->
+    <string name="registration_success">Sikeres regisztráció!</string>
+    <string name="login_success">Sikeres bejelentkezés!</string>
+    <string name="profile_updated">A profil sikeresen frissítve!</string>
 </resources>

@@ -22,12 +22,16 @@ import java.util.List;
 
 import nje.gamf.speedyspoon.Adapters.MenuItemAdapter;
 import nje.gamf.speedyspoon.Models.MenuItem;
+import nje.gamf.speedyspoon.Models.Restaurant;
 import nje.gamf.speedyspoon.Repositories.MenuItemCallback;
 import nje.gamf.speedyspoon.Repositories.MenuItemRepository;
+import nje.gamf.speedyspoon.Repositories.RestaurantCallback;
+import nje.gamf.speedyspoon.Repositories.RestaurantRepository;
 
 public class MainActivity extends AppCompatActivity {
 
     private MenuItemRepository menuItemRepository;
+    private RestaurantRepository restaurantRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onError(DatabaseError error) {
                 Log.w("testing", "Failed to read menu items", error.toException());
+            }
+        });
+
+        restaurantRepository = new RestaurantRepository();
+
+        restaurantRepository.fetchRestaurants(new RestaurantCallback() {
+            @Override
+            public void onRestaurantsLoaded(List<Restaurant> restaurants) {
+                Log.d("testing", "restaurants loaded: " + restaurants.size());
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                Log.w("testing", "Failed to read restaurants", error.toException());
             }
         });
 

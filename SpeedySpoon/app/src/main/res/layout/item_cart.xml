@@ -79,9 +79,9 @@
                 android:id="@+id/decrease_button"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_remove"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/decrease_quantity" />
+<!--            android:src="@drawable/ic_remove"-->
 
             <TextView
                 android:id="@+id/item_quantity"
@@ -97,9 +97,10 @@
                 android:id="@+id/increase_button"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_add"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/increase_quantity" />
+<!--            android:src="@drawable/ic_add"-->
+
         </LinearLayout>
 
         <Button

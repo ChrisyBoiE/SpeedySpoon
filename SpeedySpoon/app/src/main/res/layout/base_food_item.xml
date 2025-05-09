@@ -19,11 +19,11 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:scaleType="centerCrop"
-            android:contentDescription="@string/food_image_description"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:src="@tools:sample/avatars" />
+<!--        android:contentDescription="@string/food_image_description"-->
 
         <TextView
             android:id="@+id/item_name"

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "975279670194",
+    "firebase_url": "https://speedyspoon-be378-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "speedyspoon-be378",
+    "storage_bucket": "speedyspoon-be378.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975279670194:android:05444f8beec377859f1aab",
+        "android_client_info": {
+          "package_name": "nje.speedyspoon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAymV9BT2qLZ8ItdPfzcra7KCkAIcDIypk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

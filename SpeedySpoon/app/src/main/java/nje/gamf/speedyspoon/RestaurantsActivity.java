@@ -74,16 +74,6 @@ public class RestaurantsActivity extends AppCompatActivity {
         setupBottomNavigation();
     }
 
-    private void loadRestaurants() {
-        swipeRefreshLayout.setRefreshing(true);
-        restaurantRepository.fetchRestaurants((RestaurantCallback) this);
-    }
-
-    private void updateEmptyView(boolean isEmpty) {
-        emptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
-        restaurantsRecyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
-    }
-
     private void setupBottomNavigation() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.navigation_restaurants);
@@ -141,6 +131,37 @@ public class RestaurantsActivity extends AppCompatActivity {
             });
 
             categoryChipGroup.addView(chip);
+        }
+    }
+
+    private void loadRestaurants() {
+        swipeRefreshLayout.setRefreshing(true);
+        restaurantRepository.fetchRestaurants(new RestaurantCallback() {
+            @Override
+            public void onRestaurantsLoaded(List<Restaurant> restaurants) {
+                allRestaurants = restaurants;
+                restaurantAdapter.updateRestaurants(restaurants);
+                updateEmptyView();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                Toast.makeText(RestaurantsActivity.this, 
+                    "Hiba történt az éttermek betöltése közben", 
+                    Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    private void updateEmptyView() {
+        if (allRestaurants == null || allRestaurants.isEmpty()) {
+            emptyView.setVisibility(View.VISIBLE);
+            restaurantsRecyclerView.setVisibility(View.GONE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+            restaurantsRecyclerView.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -81,7 +81,6 @@ public class RestaurantsActivity extends AppCompatActivity {
                 }
             });
 
-            // Add the chip to the ChipGroup
             categoryChipGroup.addView(chip);
         }
     }

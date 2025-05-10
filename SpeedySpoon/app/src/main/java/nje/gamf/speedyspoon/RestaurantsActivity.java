@@ -9,12 +9,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.database.DatabaseError;
 
@@ -22,16 +24,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nje.gamf.speedyspoon.Adapters.RestaurantAdapter;
+import nje.gamf.speedyspoon.Models.Category;
 import nje.gamf.speedyspoon.Models.Restaurant;
 import nje.gamf.speedyspoon.Repositories.RestaurantCallback;
 import nje.gamf.speedyspoon.Repositories.RestaurantRepository;
+import nje.gamf.speedyspoon.ViewModels.CategoriesViewModel;
 
-public class RestaurantsActivity extends AppCompatActivity implements RestaurantCallback {
+public class RestaurantsActivity extends AppCompatActivity {
+    private CategoriesViewModel categoriesViewModel;
+    private ChipGroup categoryChipGroup;
     private RecyclerView restaurantsRecyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView emptyView;
     private EditText searchEditText;
-    private ChipGroup categoryChipGroup;
     private RestaurantRepository restaurantRepository;
     private RestaurantAdapter restaurantAdapter;
     private List<Restaurant> allRestaurants;
@@ -44,7 +49,7 @@ public class RestaurantsActivity extends AppCompatActivity implements Restaurant
         // A nézeteket inicializáljuk
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        
+
         restaurantsRecyclerView = findViewById(R.id.restaurants_recycler_view);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
         emptyView = findViewById(R.id.empty_view);
@@ -62,15 +67,6 @@ public class RestaurantsActivity extends AppCompatActivity implements Restaurant
         // Setup SwipeRefreshLayout
         swipeRefreshLayout.setOnRefreshListener(this::loadRestaurants);
 
-        // Kereső
-        searchEditText.setOnEditorActionListener((v, actionId, event) -> {
-            filterRestaurants();
-            return true;
-        });
-
-        // Kategóriák szűrése
-        categoryChipGroup.setOnCheckedChangeListener((group, checkedId) -> filterRestaurants());
-
         // Éttermek betöltése
         loadRestaurants();
 
@@ -80,38 +76,7 @@ public class RestaurantsActivity extends AppCompatActivity implements Restaurant
 
     private void loadRestaurants() {
         swipeRefreshLayout.setRefreshing(true);
-        restaurantRepository.fetchRestaurants(this);
-    }
-
-    private void filterRestaurants() {
-        if (allRestaurants == null) return;
-
-        String searchQuery = searchEditText.getText().toString().toLowerCase();
-        String selectedCategory = null;
-
-        int selectedChipId = categoryChipGroup.getCheckedChipId();
-        if (selectedChipId != View.NO_ID) {
-            Chip selectedChip = findViewById(selectedChipId);
-            selectedCategory = selectedChip.getText().toString();
-        }
-
-        List<Restaurant> filteredList = new ArrayList<>();
-        for (Restaurant restaurant : allRestaurants) {
-            boolean matchesSearch = searchQuery.isEmpty() ||
-                    restaurant.getName().toLowerCase().contains(searchQuery) ||
-                    restaurant.getDescription().toLowerCase().contains(searchQuery);
-            
-            boolean matchesCategory = selectedCategory == null ||
-                    selectedCategory.equals(getString(R.string.category_all)) ||
-                    restaurant.getCuisineType().equals(selectedCategory);
-
-            if (matchesSearch && matchesCategory) {
-                filteredList.add(restaurant);
-            }
-        }
-
-        restaurantAdapter.updateRestaurants(filteredList);
-        updateEmptyView(filteredList.isEmpty());
+        restaurantRepository.fetchRestaurants((RestaurantCallback) this);
     }
 
     private void updateEmptyView(boolean isEmpty) {
@@ -142,20 +107,40 @@ public class RestaurantsActivity extends AppCompatActivity implements Restaurant
                 finish();
                 return true;
             }
+            // Restaurants-ra nem kell semmit csinálni, mert már ott vagyunk
             return true;
         });
+
+        categoryChipGroup = findViewById(R.id.category_chip_group);
+        categoriesViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
+        categoriesViewModel.categories.observe(this, this::displayCategories);
     }
 
-    @Override
-    public void onRestaurantsLoaded(List<Restaurant> restaurants) {
-        swipeRefreshLayout.setRefreshing(false);
-        allRestaurants = restaurants;
-        filterRestaurants();
-    }
+    private void displayCategories(List<Category> categories) {
+        categoryChipGroup.removeAllViews();
 
-    @Override
-    public void onError(DatabaseError error) {
-        swipeRefreshLayout.setRefreshing(false);
-        Toast.makeText(this, "Hiba történt az éttermek betöltése közben", Toast.LENGTH_SHORT).show();
+        for (Category category : categories) {
+            Chip chip = new Chip(this);
+            chip.setText(category.getName());
+
+            chip.setChipDrawable(ChipDrawable.createFromAttributes(this,
+                    null,
+                    0,
+                    com.google.android.material.R.style.Widget_MaterialComponents_Chip_Choice));
+
+            chip.setCheckable(true);
+
+            if (category.equals("All")) {
+                chip.setChecked(true);
+            }
+
+            chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    String selectedCategory = ((Chip) buttonView).getText().toString();
+                }
+            });
+
+            categoryChipGroup.addView(chip);
+        }
     }
-} 
+}

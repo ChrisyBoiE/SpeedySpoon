@@ -1,7 +1,10 @@
 package nje.gamf.speedyspoon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -264,9 +267,21 @@ public class RestaurantMenuActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_restaurant_detail, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
+            return true;
+        } else if (item.getItemId() == R.id.action_cart) {
+            // Kosár activity indítása
+            Intent intent = new Intent(this, CartActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);

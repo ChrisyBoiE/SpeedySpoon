@@ -37,4 +37,4 @@ public class ProfileActivity extends AppCompatActivity {
             return true;
         });
     }
-} 
+}

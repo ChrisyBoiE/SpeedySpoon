@@ -1,5 +1,6 @@
 package nje.gamf.speedyspoon.Adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.Random;
 
 import nje.gamf.speedyspoon.Models.Restaurant;
 import nje.gamf.speedyspoon.R;
+import nje.gamf.speedyspoon.RestaurantMenuActivity;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private List<Restaurant> restaurants;
@@ -71,6 +73,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                 .load(RESTAURANT_IMAGES[randomImageIndex])
                 .centerCrop()
                 .into(holder.restaurantImage);
+
+        // Click listener for the entire item
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), RestaurantMenuActivity.class);
+            intent.putExtra("restaurant", restaurant);
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override

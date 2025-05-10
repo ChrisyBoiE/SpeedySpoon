@@ -12,9 +12,16 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import nje.gamf.speedyspoon.Adapters.MenuItemAdapter;
@@ -33,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private MenuItemRepository menuItemRepository;
     private RestaurantRepository restaurantRepository;
     private CategoriesRepository categoriesRepository;
+    private static final int RECOMMENDED_ITEM_COUNT = 4; // Maximum number of recommended items
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,24 +53,8 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Testing menu item repo
-        menuItemRepository = new MenuItemRepository();
-
-        menuItemRepository.fetchMenuItems(new MenuItemCallback() {
-            @Override
-            public void onMenuItemsLoaded(List<MenuItem> menuItems) {
-                RecyclerView recyclerView = findViewById(R.id.recommended_recycler_view);
-                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                MenuItemAdapter adapter = new MenuItemAdapter(menuItems);
-                recyclerView.setAdapter(adapter);
-                Log.d("testing", "Menu items loaded: " + menuItems.size());
-            }
-
-            @Override
-            public void onError(DatabaseError error) {
-                Log.w("testing", "Failed to read menu items", error.toException());
-            }
-        });
+        // Load recommended menu items
+        loadRecommendedMenuItems();
 
         // testing categories repo
         categoriesRepository = new CategoriesRepository();
@@ -116,6 +108,48 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             return true;
+        });
+    }
+
+    private void loadRecommendedMenuItems() {
+        // Initialize Firebase reference
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        // Create a query to fetch all menu items
+        Query menuItemsQuery = databaseReference.child("menuItems").limitToFirst(RECOMMENDED_ITEM_COUNT);
+        
+        // Fetch the top 4 menu items for recommendations
+        menuItemsQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<nje.gamf.speedyspoon.Models.MenuItem> recommendedItems = new ArrayList<>();
+                
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    nje.gamf.speedyspoon.Models.MenuItem menuItem = snapshot.getValue(nje.gamf.speedyspoon.Models.MenuItem.class);
+                    if (menuItem != null) {
+                        menuItem.setId(snapshot.getKey());
+                        recommendedItems.add(menuItem);
+                    }
+                    
+                    // Stop after 4 items
+                    if (recommendedItems.size() >= RECOMMENDED_ITEM_COUNT) {
+                        break;
+                    }
+                }
+                
+                // Setup the RecyclerView
+                RecyclerView recyclerView = findViewById(R.id.recommended_recycler_view);
+                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                MenuItemAdapter adapter = new MenuItemAdapter(recommendedItems);
+                recyclerView.setAdapter(adapter);
+                
+                Log.d("MainActivity", "Recommended items loaded: " + recommendedItems.size());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("MainActivity", "Failed to read recommended menu items", error.toException());
+            }
         });
     }
 

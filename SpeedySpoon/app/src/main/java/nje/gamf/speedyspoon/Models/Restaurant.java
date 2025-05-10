@@ -1,8 +1,10 @@
 package nje.gamf.speedyspoon.Models;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class Restaurant {
+public class Restaurant implements Serializable {
+    private String id;
     private String address;
     private String cuisineType;
     private String description;
@@ -14,13 +16,22 @@ public class Restaurant {
         // Default constructor required for Firebase
     }
 
-    public Restaurant(String address, String cuisineType, String description, Map<String, Boolean> menuItems, String name, double rating) {
+    public Restaurant(String id, String address, String cuisineType, String description, Map<String, Boolean> menuItems, String name, double rating) {
+        this.id = id;
         this.address = address;
         this.cuisineType = cuisineType;
         this.description = description;
         this.menuItems = menuItems;
         this.name = name;
         this.rating = rating;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getAddress() {

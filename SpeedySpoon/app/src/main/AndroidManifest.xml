@@ -21,6 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RestaurantsActivity" />
+        <activity android:name=".FavoritesActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".OrderDetailsActivity" />
     </application>
 
 </manifest>

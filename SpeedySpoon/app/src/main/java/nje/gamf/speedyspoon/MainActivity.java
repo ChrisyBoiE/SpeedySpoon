@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -12,17 +11,16 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
 import nje.gamf.speedyspoon.Adapters.MenuItemAdapter;
+import nje.gamf.speedyspoon.Models.Category;
 import nje.gamf.speedyspoon.Models.MenuItem;
 import nje.gamf.speedyspoon.Models.Restaurant;
+import nje.gamf.speedyspoon.Repositories.CategoriesCallback;
+import nje.gamf.speedyspoon.Repositories.CategoriesRepository;
 import nje.gamf.speedyspoon.Repositories.MenuItemCallback;
 import nje.gamf.speedyspoon.Repositories.MenuItemRepository;
 import nje.gamf.speedyspoon.Repositories.RestaurantCallback;
@@ -32,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MenuItemRepository menuItemRepository;
     private RestaurantRepository restaurantRepository;
+    private CategoriesRepository categoriesRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +62,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // testing categories repo
+        categoriesRepository = new CategoriesRepository();
+
+        categoriesRepository.fetchCategories(new CategoriesCallback() {
+            @Override
+            public void onCategoriesLoaded(List<Category> categories) {
+                Log.d("testing", "categories loaded: " + categories.size());
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                Log.w("testing", "Failed to read categories", error.toException());
+            }
+        });
+
+        // testing restaurant repo
         restaurantRepository = new RestaurantRepository();
 
         restaurantRepository.fetchRestaurants(new RestaurantCallback() {

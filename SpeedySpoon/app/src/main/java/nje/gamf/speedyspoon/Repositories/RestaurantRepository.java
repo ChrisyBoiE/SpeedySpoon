@@ -36,7 +36,9 @@ public class RestaurantRepository {
                         if (restaurant != null) {
                             // Set the ID from the Firebase key
                             restaurant.setId(restaurantId);
-                            Log.d(TAG, "Restaurant loaded: " + restaurant.getName() + " with ID: " + restaurantId);
+                            Log.d(TAG, "Restaurant loaded: " + restaurant.getName() + 
+                                " with ID: " + restaurantId + 
+                                ", Min order: " + restaurant.getMinimumOrder());
                             restaurantsList.add(restaurant);
                         }
                     } catch (Exception e) {

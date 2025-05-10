@@ -67,13 +67,18 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         
         // Alapértelmezett feliratok (Szállítási idő, minimum rendelés stb-stb)
         holder.restaurantDeliveryTime.setText("25-40 perc");
-        holder.restaurantMinOrder.setText("Min. rendelés: 1500 Ft");
+        int minOrder = restaurant.getMinimumOrder();
+        Log.d(TAG, "Setting minimum order for " + restaurant.getName() + ": " + minOrder);
+        holder.restaurantMinOrder.setText("Min. rendelés: " + minOrder + " Ft");
         holder.restaurantDeliveryFee.setText("Kiszállítás: 500 Ft");
         
-        // A 6 feltöltött étterem képből kiválaszt 1-et véletlenszerűen
-        int randomImageIndex = random.nextInt(RESTAURANT_IMAGES.length);
+        // Éttermi kép betöltése a model alapján
+        String imageName = restaurant.getRestaurantImage();
+        imageName = imageName.replace(".jpg", "");
+        int imageResource = holder.itemView.getContext().getResources().getIdentifier(
+            imageName, "drawable", holder.itemView.getContext().getPackageName());
         Glide.with(holder.itemView.getContext())
-                .load(RESTAURANT_IMAGES[randomImageIndex])
+                .load(imageResource)
                 .centerCrop()
                 .into(holder.restaurantImage);
 

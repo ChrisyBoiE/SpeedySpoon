@@ -181,7 +181,7 @@ public class RestaurantsActivity extends AppCompatActivity {
                 for (DataSnapshot menuItemSnapshot : dataSnapshot.getChildren()) {
                     MenuItem menuItem = menuItemSnapshot.getValue(MenuItem.class);
                     if (menuItem != null) {
-                        String restaurantId = menuItem.getRestaurantID();
+                        String restaurantId = menuItem.getRestaurantId();
                         if (!restaurantMenuItems.containsKey(restaurantId)) {
                             restaurantMenuItems.put(restaurantId, new ArrayList<>());
                         }
@@ -283,7 +283,7 @@ public class RestaurantsActivity extends AppCompatActivity {
 
     private boolean hasMenuItemInCategory(Restaurant restaurant, String category) {
         // Az étterem ID-jét használjuk a menüelemek kereséséhez
-        String restaurantId = restaurant.getName(); //
+        String restaurantId = restaurant.getId();
         List<String> categories = restaurantMenuItems.get(restaurantId);
         return categories != null && categories.contains(category);
     }

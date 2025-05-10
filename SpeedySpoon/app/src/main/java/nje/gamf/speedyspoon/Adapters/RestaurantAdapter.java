@@ -1,6 +1,7 @@
 package nje.gamf.speedyspoon.Adapters;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Random;
 
@@ -23,6 +25,7 @@ import nje.gamf.speedyspoon.RestaurantMenuActivity;
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private List<Restaurant> restaurants;
     private Random random;
+    private static final String TAG = "RestaurantAdapter";
     private static final int[] RESTAURANT_IMAGES = {
             R.drawable.restaurant1,
             R.drawable.restaurant2,
@@ -76,9 +79,33 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         // Click listener for the entire item
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), RestaurantMenuActivity.class);
-            intent.putExtra("restaurant", restaurant);
-            v.getContext().startActivity(intent);
+            try {
+                Intent intent = new Intent(v.getContext(), RestaurantMenuActivity.class);
+                
+                // Ensure restaurant ID is not null
+                String restaurantId = restaurant.getId();
+                if (restaurantId == null || restaurantId.isEmpty()) {
+                    // Use position in the list as a fallback (since restaurantIDs in Firebase might be restaurantID1, restaurantID2, etc.)
+                    try {
+                        for (Field field : restaurant.getClass().getDeclaredFields()) {
+                            Log.d(TAG, "Field: " + field.getName());
+                        }
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error listing fields", e);
+                    }
+                    
+                    Log.w(TAG, "Restaurant ID is null, using position-based ID as fallback");
+                    restaurantId = "restaurantID" + (position + 1);
+                    restaurant.setId(restaurantId);
+                }
+                
+                Log.d(TAG, "Starting RestaurantMenuActivity with restaurant: " + restaurant.getName() + ", ID: " + restaurantId);
+                intent.putExtra("restaurant", restaurant);
+                intent.putExtra("restaurantId", restaurantId); // Add ID as separate extra for safety
+                v.getContext().startActivity(intent);
+            } catch (Exception e) {
+                Log.e(TAG, "Error starting RestaurantMenuActivity", e);
+            }
         });
     }
 

@@ -34,7 +34,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
         MenuItem currentItem = menuItems.get(position);
         holder.nameTextView.setText(currentItem.getName());
         holder.descriptionTextView.setText(currentItem.getDescription());
-        holder.priceTextView.setText("$" + currentItem.getPrice());
+        holder.priceTextView.setText(currentItem.getPrice() + " Ft");
     }
 
     @Override

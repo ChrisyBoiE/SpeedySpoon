@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,7 +37,6 @@ import java.util.Map;
 
 import nje.gamf.speedyspoon.Adapters.RestaurantAdapter;
 import nje.gamf.speedyspoon.Models.Category;
-import nje.gamf.speedyspoon.Models.MenuItem;
 import nje.gamf.speedyspoon.Models.Restaurant;
 import nje.gamf.speedyspoon.Repositories.RestaurantCallback;
 import nje.gamf.speedyspoon.Repositories.RestaurantRepository;
@@ -179,7 +181,7 @@ public class RestaurantsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 restaurantMenuItems.clear();
                 for (DataSnapshot menuItemSnapshot : dataSnapshot.getChildren()) {
-                    MenuItem menuItem = menuItemSnapshot.getValue(MenuItem.class);
+                    nje.gamf.speedyspoon.Models.MenuItem menuItem = menuItemSnapshot.getValue(nje.gamf.speedyspoon.Models.MenuItem.class);
                     if (menuItem != null) {
                         String restaurantId = menuItem.getRestaurantId();
                         if (!restaurantMenuItems.containsKey(restaurantId)) {
@@ -296,5 +298,23 @@ public class RestaurantsActivity extends AppCompatActivity {
             emptyView.setVisibility(View.GONE);
             restaurantsRecyclerView.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_restaurants, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        if (item.getItemId() == R.id.action_cart) {
+            // Kosár activity indítása
+            Intent intent = new Intent(this, CartActivity.class); // CartActivity-t kell létrehozni
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -19,52 +19,49 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nje.gamf.speedyspoon.CartManager;
+import nje.gamf.speedyspoon.Models.MenuItem;
 import nje.gamf.speedyspoon.R;
 
 public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuItemViewHolder> {
 
-    private List<nje.gamf.speedyspoon.Models.MenuItem> menuItems;
-    private Map<String, Integer> cartItems; // Map to track items in cart: itemId -> quantity
+    private List<MenuItem> menuItems;
     private boolean isInCartView; // Flag to determine if we're in the cart view
+    private CartManager cartManager;
     
-    public MenuItemAdapter(List<nje.gamf.speedyspoon.Models.MenuItem> menuItems) {
+    public MenuItemAdapter(List<MenuItem> menuItems) {
         this.menuItems = menuItems;
-        this.cartItems = new HashMap<>();
         this.isInCartView = false;
+        this.cartManager = CartManager.getInstance();
     }
     
     // Constructor for cart view
-    public MenuItemAdapter(List<nje.gamf.speedyspoon.Models.MenuItem> menuItems, Map<String, Integer> cartItems, boolean isInCartView) {
+    public MenuItemAdapter(List<MenuItem> menuItems, boolean isInCartView) {
         this.menuItems = menuItems;
-        this.cartItems = cartItems != null ? cartItems : new HashMap<>();
         this.isInCartView = isInCartView;
+        this.cartManager = CartManager.getInstance();
     }
     
-    public void updateMenuItems(List<nje.gamf.speedyspoon.Models.MenuItem> newMenuItems) {
+    public void updateMenuItems(List<MenuItem> newMenuItems) {
         this.menuItems = newMenuItems;
         notifyDataSetChanged();
     }
     
     // Method to add item to cart
-    public void addToCart(String itemId) {
-        int currentQuantity = cartItems.getOrDefault(itemId, 0);
-        cartItems.put(itemId, currentQuantity + 1);
+    public void addToCart(MenuItem item) {
+        cartManager.addToCart(item);
         notifyDataSetChanged();
     }
     
     // Method to remove item from cart
     public void removeFromCart(String itemId) {
-        cartItems.remove(itemId);
+        cartManager.removeFromCart(itemId);
         notifyDataSetChanged();
     }
     
     // Method to update quantity
     public void updateQuantity(String itemId, int newQuantity) {
-        if (newQuantity <= 0) {
-            cartItems.remove(itemId);
-        } else {
-            cartItems.put(itemId, newQuantity);
-        }
+        cartManager.updateQuantity(itemId, newQuantity);
         notifyDataSetChanged();
     }
 
@@ -78,7 +75,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
 
     @Override
     public void onBindViewHolder(@NonNull MenuItemViewHolder holder, int position) {
-        nje.gamf.speedyspoon.Models.MenuItem currentItem = menuItems.get(position);
+        MenuItem currentItem = menuItems.get(position);
         
         holder.nameTextView.setText(currentItem.getName());
         holder.descriptionTextView.setText(currentItem.getDescription());
@@ -97,7 +94,8 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
         
         // Handle cart-related UI elements
         String itemId = currentItem.getId();
-        boolean isInCart = cartItems.containsKey(itemId);
+        int quantity = cartManager.getQuantity(itemId);
+        boolean isInCart = quantity > 0;
         
         // Cart-specific elements
         if (isInCart || isInCartView) {
@@ -107,27 +105,36 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
             holder.addToCartButton.setVisibility(View.GONE);
             
             // Set the current quantity
-            int quantity = cartItems.getOrDefault(itemId, 1);
             holder.quantityTextView.setText(String.valueOf(quantity));
             
             // Set click listeners for quantity adjustment
             holder.decreaseButton.setOnClickListener(v -> {
-                int currentQuantity = cartItems.getOrDefault(itemId, 1);
+                int currentQuantity = cartManager.getQuantity(itemId);
                 if (currentQuantity > 1) {
                     updateQuantity(itemId, currentQuantity - 1);
                 } else {
                     // If quantity would become 0, remove the item
                     removeFromCart(itemId);
+                    // Hide quantity layout, show add to cart button
+                    holder.quantityLayout.setVisibility(View.GONE);
+                    holder.removeButton.setVisibility(View.GONE);
+                    holder.addToCartButton.setVisibility(View.VISIBLE);
                 }
             });
             
             holder.increaseButton.setOnClickListener(v -> {
-                int currentQuantity = cartItems.getOrDefault(itemId, 1);
+                int currentQuantity = cartManager.getQuantity(itemId);
                 updateQuantity(itemId, currentQuantity + 1);
             });
             
             holder.removeButton.setOnClickListener(v -> {
                 removeFromCart(itemId);
+                // Hide quantity layout, show add to cart button if not in cart view
+                if (!isInCartView) {
+                    holder.quantityLayout.setVisibility(View.GONE);
+                    holder.removeButton.setVisibility(View.GONE);
+                    holder.addToCartButton.setVisibility(View.VISIBLE);
+                }
                 Toast.makeText(v.getContext(), "Eltávolítva a kosárból", Toast.LENGTH_SHORT).show();
             });
         } else {
@@ -138,7 +145,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
             
             // Set click listener for add to cart button
             holder.addToCartButton.setOnClickListener(v -> {
-                addToCart(itemId);
+                addToCart(currentItem);
                 // Update UI immediately
                 holder.quantityLayout.setVisibility(View.VISIBLE);
                 holder.removeButton.setVisibility(View.VISIBLE);

@@ -24,17 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nje.gamf.speedyspoon.Adapters.MenuItemAdapter;
-import nje.gamf.speedyspoon.Models.Detail;
-import nje.gamf.speedyspoon.Models.Order;
-import nje.gamf.speedyspoon.Models.Status;
-import nje.gamf.speedyspoon.Repositories.OrderCallback;
-import nje.gamf.speedyspoon.Repositories.OrderRepository;
 
 public class MainActivity extends AppCompatActivity {
     private static final int RECOMMENDED_ITEM_COUNT = 4; // Maximum number of recommended items
-
-    // Test
-    private OrderRepository orderRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,58 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             return true;
-        });
-
-        // Test
-        orderRepository = new OrderRepository();
-        orderRepository.fetchOrderByUserId("userID1", new OrderCallback() {
-            @Override
-            public void onOrdersLoaded(List<Order> orders) {
-                Log.i("test", "Fetched Orders:" + orders.size());
-                for (Order order : orders) {
-                    Log.i("test", order.toString()); // Ensure your Order model has a toString() method for better logging
-                }
-            }
-
-            @Override
-            public void onOrderDetailsLoaded(List<Detail> orderDetails) {
-
-            }
-
-            @Override
-            public void onOrderStatusLoaded(List<Status> orderStatuses) {
-                // Not needed for fetching orders, but required by the interface
-            }
-
-            @Override
-            public void onError(DatabaseError error) {
-                Log.e("test", "Error fetching orders: " + error.getMessage());
-            }
-        });
-
-        orderRepository.fetchOrderDetailByOrderId("orderID1",new OrderCallback() {
-            @Override
-            public void onOrderDetailsLoaded(List<Detail> orderDetails) {
-                Log.i("test", "Fetched Orders:" + orderDetails.size());
-                for (Detail detail : orderDetails) {
-                    Log.i("test", detail.toString()); // Ensure your Order model has a toString() method for better logging
-                }
-            }
-
-            @Override
-            public void onOrdersLoaded(List<Order> orders) {
-
-            }
-
-            @Override
-            public void onOrderStatusLoaded(List<Status> orderStatuses) {
-                // Not needed for fetching orders, but required by the interface
-            }
-
-            @Override
-            public void onError(DatabaseError error) {
-                Log.e("MainActivity", "Error fetching orders: " + error.getMessage());
-            }
         });
     }
 

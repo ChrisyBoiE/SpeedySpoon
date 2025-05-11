@@ -75,7 +75,7 @@ public class OrderRepository {
     }
 
     public void fetchOrderDetailByOrderId(final String orderID, final OrderCallback callback) {
-        orderDetailRef.child(orderID).addValueEventListener(new ValueEventListener() {
+        orderDetailRef.orderByChild("orderID").equalTo(orderID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Detail> orderDetails = new ArrayList<>();

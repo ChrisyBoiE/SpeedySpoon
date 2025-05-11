@@ -14,13 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nje.gamf.speedyspoon.Models.Order;
+import nje.gamf.speedyspoon.Models.Status;
 
 public class OrderRepository {
     private DatabaseReference orderRef;
+    private DatabaseReference orderStatusRef;
 
     public OrderRepository(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         orderRef = database.getReference("orders");
+        orderStatusRef = database.getReference("orderStatus");
     }
 
     public void fetchOrders(final OrderCallback callback) {
@@ -36,6 +39,28 @@ public class OrderRepository {
                 }
                 Log.d("testing", "Orders fetched: " + orders.size());
                 callback.onOrdersLoaded(orders);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                callback.onError(databaseError);
+            }
+        });
+    }
+
+    public void fetchOrderStatus(final OrderCallback callback) {
+        orderStatusRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Status> ordersStatus = new ArrayList<>();
+                for (DataSnapshot orderStatusSnapshot : dataSnapshot.getChildren()) {
+                    Status status = orderStatusSnapshot.getValue(Status.class);
+                    if (status != null) {
+                        ordersStatus.add(status);
+                    }
+                }
+                Log.d("testing", "Order statutes fetched: " + ordersStatus.size());
+                callback.onOrderStatusLoaded(ordersStatus);
             }
 
             @Override

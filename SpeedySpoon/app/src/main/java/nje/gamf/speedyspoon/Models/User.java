@@ -8,6 +8,9 @@ public class User {
     private String phoneNumber;
     private String username;
     private Map<String, Order> orders;
+    private String address;
+    private String city;
+    private String userId;
 
     // Kötelező üres konstruktor Firebaseserializáláshoz
     public User() {
@@ -61,5 +64,29 @@ public class User {
 
     public void setOrders(Map<String, Order> orders) {
         this.orders = orders;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

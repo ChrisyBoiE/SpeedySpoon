@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private Button loginButton, registerButton;
     private TextView registerText, loginText;
     private UserRepository userRepository;
+    
+    // Aktuális felhasználó tárolása
+    private static User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
             userRepository.loginUser(email, password, new UserRepository.UserLoginCallback() {
                 @Override
                 public void onLoginSuccess(User user) {
+                    // Felhasználó adatainak tárolása
+                    currentUser = user;
                     Toast.makeText(MainActivity.this, "Sikeres bejelentkezés!", Toast.LENGTH_SHORT).show();
                     showHomeScreen();
                 }
@@ -245,5 +250,15 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
         }
+    }
+
+    // Felhasználó adatainak lekérdezése
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    // Felhasználó kijelentkeztetése
+    public static void logoutUser() {
+        currentUser = null;
     }
 }

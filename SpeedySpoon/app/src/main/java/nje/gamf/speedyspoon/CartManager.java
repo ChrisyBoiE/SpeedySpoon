@@ -67,4 +67,41 @@ public class CartManager {
         cartItems.clear();
         itemDetails.clear();
     }
+    
+    /**
+     * Kiszámolja a kosár tartalmának részösszegét (szállítási díj nélkül)
+     * @return a részösszeg forintban
+     */
+    public int calculateSubtotal() {
+        int subtotal = 0;
+        for (Map.Entry<String, Integer> entry : cartItems.entrySet()) {
+            String itemId = entry.getKey();
+            int quantity = entry.getValue();
+            MenuItem item = itemDetails.get(itemId);
+            if (item != null) {
+                subtotal += item.getPrice() * quantity;
+            }
+        }
+        return subtotal;
+    }
+    
+    /**
+     * Visszaadja a kosárban lévő elemek számát
+     * @return az elemek száma
+     */
+    public int getItemCount() {
+        int count = 0;
+        for (int quantity : cartItems.values()) {
+            count += quantity;
+        }
+        return count;
+    }
+    
+    /**
+     * Ellenőrzi, hogy a kosár üres-e
+     * @return true, ha a kosár üres
+     */
+    public boolean isEmpty() {
+        return cartItems.isEmpty();
+    }
 } 

@@ -1,5 +1,6 @@
 package nje.gamf.speedyspoon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,14 +43,21 @@ public class CartActivity extends AppCompatActivity {
         emptyCartLayout = findViewById(R.id.empty_cart_layout);
         checkoutButton = findViewById(R.id.checkout_button);
         
+        // Böngéssz az éttermek között gomb kezelése
+        Button browseRestaurantsButton = findViewById(R.id.browse_restaurants_button);
+        browseRestaurantsButton.setOnClickListener(v -> {
+            // Navigálás az éttermek fülre
+            finish();
+        });
+        
         // RecyclerView beállítása
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         
         // Fizetés gomb beállítása
         checkoutButton.setOnClickListener(v -> {
-            Toast.makeText(this, "Rendelés leadva!", Toast.LENGTH_SHORT).show();
-            cartManager.clearCart();
-            updateCartUI();
+            // Navigálás a checkout képernyőre
+            Intent intent = new Intent(this, CheckoutActivity.class);
+            startActivity(intent);
         });
         
         // Kosár tartalmának betöltése
@@ -83,5 +91,13 @@ public class CartActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // A kosár tartalmának frissítése, amikor visszatérünk az activity-hez
+        // Például ha a checkout képernyőről térünk vissza
+        updateCartUI();
     }
 } 

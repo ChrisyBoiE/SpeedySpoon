@@ -13,17 +13,21 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import nje.gamf.speedyspoon.Models.Detail;
 import nje.gamf.speedyspoon.Models.Order;
+import nje.gamf.speedyspoon.Models.OrderDetail;
 import nje.gamf.speedyspoon.Models.Status;
 
 public class OrderRepository {
     private DatabaseReference orderRef;
     private DatabaseReference orderStatusRef;
+    private DatabaseReference orderDetailRef;
 
     public OrderRepository(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         orderRef = database.getReference("orders");
         orderStatusRef = database.getReference("orderStatus");
+        orderDetailRef = database.getReference("orderDetails");
     }
 
     public void fetchOrders(final OrderCallback callback) {
@@ -39,6 +43,50 @@ public class OrderRepository {
                 }
                 Log.d("testing", "Orders fetched: " + orders.size());
                 callback.onOrdersLoaded(orders);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                callback.onError(databaseError);
+            }
+        });
+    }
+
+    public void fetchOrderByUserId(final String userID, final OrderCallback callback) {
+        orderRef.orderByChild("userID").equalTo(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Order> orders = new ArrayList<>();
+                for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
+                    Order order = orderSnapshot.getValue(Order.class);
+                    if (order != null) {
+                        orders.add(order);
+                    }
+                }
+                Log.d("testing", "Orders fetched for user: " + orders.size());
+                callback.onOrdersLoaded(orders);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                callback.onError(databaseError);
+            }
+        });
+    }
+
+    public void fetchOrderDetailByOrderId(final String orderID, final OrderCallback callback) {
+        orderDetailRef.child(orderID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Detail> orderDetails = new ArrayList<>();
+                for(DataSnapshot detailSnapshot : dataSnapshot.getChildren()) {
+                    Detail detail = detailSnapshot.getValue(Detail.class);
+                    if (detail != null) {
+                        orderDetails.add(detail);
+                    }
+                }
+                Log.d("testing", "Order details fetched: " + orderDetails.size());
+                callback.onOrderDetailsLoaded(orderDetails);
             }
 
             @Override

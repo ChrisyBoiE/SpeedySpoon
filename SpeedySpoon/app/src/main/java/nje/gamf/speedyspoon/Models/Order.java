@@ -5,13 +5,13 @@ import java.util.List;
 public class Order {
     private String orderDate;
     private String status;
-    private String totalAmount;
+    private Integer totalAmount;
     private OrderDetail orderDetails;
     private String userID;
 
     public Order(){}
 
-    public Order(String orderDate, String status, String totalAmount, OrderDetail orderDetails, String userID) {
+    public Order(String orderDate, String status, Integer totalAmount, OrderDetail orderDetails, String userID) {
         this.orderDate = orderDate;
         this.status = status;
         this.totalAmount = totalAmount;
@@ -35,11 +35,11 @@ public class Order {
         this.status = status;
     }
 
-    public String getTotalAmount() {
+    public Integer getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(String totalAmount) {
+    public void setTotalAmount(Integer totalAmount) {
         this.totalAmount = totalAmount;
     }
 

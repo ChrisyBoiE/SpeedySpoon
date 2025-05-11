@@ -99,58 +99,34 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
         
         // Cart-specific elements
         if (isInCart || isInCartView) {
-            // Show quantity layout and remove button, hide add to cart button
             holder.quantityLayout.setVisibility(View.VISIBLE);
-            holder.removeButton.setVisibility(View.VISIBLE);
-            holder.addToCartButton.setVisibility(View.GONE);
-            
-            // Set the current quantity
+            holder.cartActionButton.setText("Eltávolítás");
+            holder.cartActionButton.setVisibility(View.VISIBLE);
+            // Mennyiség beállítása
             holder.quantityTextView.setText(String.valueOf(quantity));
-            
-            // Set click listeners for quantity adjustment
+
             holder.decreaseButton.setOnClickListener(v -> {
                 int currentQuantity = cartManager.getQuantity(itemId);
                 if (currentQuantity > 1) {
                     updateQuantity(itemId, currentQuantity - 1);
                 } else {
-                    // If quantity would become 0, remove the item
                     removeFromCart(itemId);
-                    // Hide quantity layout, show add to cart button
-                    holder.quantityLayout.setVisibility(View.GONE);
-                    holder.removeButton.setVisibility(View.GONE);
-                    holder.addToCartButton.setVisibility(View.VISIBLE);
                 }
             });
-            
             holder.increaseButton.setOnClickListener(v -> {
                 int currentQuantity = cartManager.getQuantity(itemId);
                 updateQuantity(itemId, currentQuantity + 1);
             });
-            
-            holder.removeButton.setOnClickListener(v -> {
+            holder.cartActionButton.setOnClickListener(v -> {
                 removeFromCart(itemId);
-                // Hide quantity layout, show add to cart button if not in cart view
-                if (!isInCartView) {
-                    holder.quantityLayout.setVisibility(View.GONE);
-                    holder.removeButton.setVisibility(View.GONE);
-                    holder.addToCartButton.setVisibility(View.VISIBLE);
-                }
                 Toast.makeText(v.getContext(), "Eltávolítva a kosárból", Toast.LENGTH_SHORT).show();
             });
         } else {
-            // Hide quantity layout and remove button, show add to cart button
             holder.quantityLayout.setVisibility(View.GONE);
-            holder.removeButton.setVisibility(View.GONE);
-            holder.addToCartButton.setVisibility(View.VISIBLE);
-            
-            // Set click listener for add to cart button
-            holder.addToCartButton.setOnClickListener(v -> {
+            holder.cartActionButton.setText("Kosárba");
+            holder.cartActionButton.setVisibility(View.VISIBLE);
+            holder.cartActionButton.setOnClickListener(v -> {
                 addToCart(currentItem);
-                // Update UI immediately
-                holder.quantityLayout.setVisibility(View.VISIBLE);
-                holder.removeButton.setVisibility(View.VISIBLE);
-                holder.addToCartButton.setVisibility(View.GONE);
-                holder.quantityTextView.setText("1");
                 Toast.makeText(v.getContext(), "Hozzáadva a kosárhoz", Toast.LENGTH_SHORT).show();
             });
         }
@@ -170,8 +146,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
         public TextView quantityTextView;
         public ImageButton decreaseButton;
         public ImageButton increaseButton;
-        public Button removeButton;
-        public Button addToCartButton;
+        public Button cartActionButton;
 
         public MenuItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -185,8 +160,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
             quantityTextView = itemView.findViewById(R.id.item_quantity);
             decreaseButton = itemView.findViewById(R.id.decrease_button);
             increaseButton = itemView.findViewById(R.id.increase_button);
-            removeButton = itemView.findViewById(R.id.remove_button);
-            addToCartButton = itemView.findViewById(R.id.add_to_cart_button);
+            cartActionButton = itemView.findViewById(R.id.cart_action_button);
         }
     }
 }

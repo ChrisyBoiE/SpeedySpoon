@@ -1,26 +1,46 @@
 package nje.gamf.speedyspoon.Models;
 
+import java.io.Serializable;
 import java.util.Map;
+import com.google.firebase.database.PropertyName;
 
-public class Restaurant {
+public class Restaurant implements Serializable {
+    private String id;
     private String address;
     private String cuisineType;
     private String description;
     private Map<String, Boolean> menuItems;
     private String name;
     private double rating;
+    
+    @PropertyName("restaurant_image")
+    private String restaurantImage;
+    
+    @PropertyName("minimum_order")
+    private int minimum_order;
 
     public Restaurant() {
         // Default constructor required for Firebase
     }
 
-    public Restaurant(String address, String cuisineType, String description, Map<String, Boolean> menuItems, String name, double rating) {
+    public Restaurant(String id, String address, String cuisineType, String description, Map<String, Boolean> menuItems, String name, double rating, String restaurantImage, int minimum_order) {
+        this.id = id;
         this.address = address;
         this.cuisineType = cuisineType;
         this.description = description;
         this.menuItems = menuItems;
         this.name = name;
         this.rating = rating;
+        this.restaurantImage = restaurantImage;
+        this.minimum_order = minimum_order;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getAddress() {
@@ -69,5 +89,25 @@ public class Restaurant {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    @PropertyName("restaurant_image")
+    public String getRestaurantImage() {
+        return restaurantImage;
+    }
+
+    @PropertyName("restaurant_image")
+    public void setRestaurantImage(String restaurantImage) {
+        this.restaurantImage = restaurantImage;
+    }
+
+    @PropertyName("minimum_order")
+    public int getMinimumOrder() {
+        return minimum_order;
+    }
+
+    @PropertyName("minimum_order")
+    public void setMinimumOrder(int minimum_order) {
+        this.minimum_order = minimum_order;
     }
 }

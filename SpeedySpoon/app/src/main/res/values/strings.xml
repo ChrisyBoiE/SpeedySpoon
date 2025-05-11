@@ -205,5 +205,10 @@
     <string name="no">Nem</string>
     <string name="cancel">Mégse</string>
 
+    <!-- Rendelés sikeres képernyő -->
+    <string name="order_success">Sikeres rendelés</string>
+    <string name="order_success_title">Köszönjük a rendelésed!</string>
+    <string name="order_success_message">A rendelésed sikeresen leadva. Hamarosan értesítjük a rendelésed állapotáról.</string>
+    <string name="return_to_main">Vissza a főoldalra</string>
 
 </resources>

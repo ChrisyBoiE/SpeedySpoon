@@ -84,45 +84,11 @@
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_all"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/category_chip_height"
-                        android:text="@string/category_all"
+                        android:layout_height="48dp"
+                        android:text="Összes"
                         android:checked="true"
                         style="@style/Widget.MaterialComponents.Chip.Choice" />
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_italian"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/category_chip_height"
-                        android:text="@string/category_italian"
-                        style="@style/Widget.MaterialComponents.Chip.Choice" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_asian"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/category_chip_height"
-                        android:text="@string/category_asian"
-                        style="@style/Widget.MaterialComponents.Chip.Choice" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_fast_food"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/category_chip_height"
-                        android:text="@string/category_fast_food"
-                        style="@style/Widget.MaterialComponents.Chip.Choice" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_vegetarian"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/category_chip_height"
-                        android:text="@string/category_vegetarian"
-                        style="@style/Widget.MaterialComponents.Chip.Choice" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_dessert"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/category_chip_height"
-                        android:text="@string/category_dessert"
-                        style="@style/Widget.MaterialComponents.Chip.Choice" />
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
         </LinearLayout>
@@ -151,5 +117,13 @@
         android:textSize="16sp"
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        app:menu="@menu/bottom_navigation_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

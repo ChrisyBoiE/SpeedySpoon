@@ -1,23 +1,34 @@
 package nje.gamf.speedyspoon.Models;
 
 public class MenuItem {
+    private String id;
     private String category;
     private String description;
     private String image;
     private String name;
     private int price;
-    private String restaurantID;
+    private String restaurantId;
 
     public MenuItem() {
+        // Default constructor required for Firebase
     }
 
-    public MenuItem(String category, String description, String image, String name, int price, String restaurantID) {
+    public MenuItem(String id, String category, String description, String image, String name, int price, String restaurantId) {
+        this.id = id;
         this.category = category;
         this.description = description;
         this.image = image;
         this.name = name;
         this.price = price;
-        this.restaurantID = restaurantID;
+        this.restaurantId = restaurantId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCategory() {
@@ -60,11 +71,11 @@ public class MenuItem {
         this.price = price;
     }
 
-    public String getRestaurantID() {
-        return restaurantID;
+    public String getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setRestaurantID(String restaurantID) {
-        this.restaurantID = restaurantID;
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
     }
 }

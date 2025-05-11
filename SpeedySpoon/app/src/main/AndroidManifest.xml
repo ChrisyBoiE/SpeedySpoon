@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".SpeedySpoonApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -21,6 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RestaurantsActivity" />
+        <activity android:name=".FavoritesActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".OrderDetailsActivity" />
+        <activity android:name=".RestaurantMenuActivity" />
+        <activity android:name=".CartActivity" />
+        <activity android:name=".CheckoutActivity" />
+        <activity android:name=".OrderSuccessActivity" />
     </application>
 
 </manifest>

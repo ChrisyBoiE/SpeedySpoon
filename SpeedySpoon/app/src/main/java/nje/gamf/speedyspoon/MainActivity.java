@@ -23,15 +23,20 @@ import java.util.List;
 import nje.gamf.speedyspoon.Adapters.MenuItemAdapter;
 import nje.gamf.speedyspoon.Models.MenuItem;
 import nje.gamf.speedyspoon.Models.Restaurant;
+import nje.gamf.speedyspoon.Models.User; // Hozzáadva
 import nje.gamf.speedyspoon.Repositories.MenuItemCallback;
 import nje.gamf.speedyspoon.Repositories.MenuItemRepository;
 import nje.gamf.speedyspoon.Repositories.RestaurantCallback;
 import nje.gamf.speedyspoon.Repositories.RestaurantRepository;
+import nje.gamf.speedyspoon.Repositories.UserRepository;
+import nje.gamf.speedyspoon.Repositories.UserRegistrationCallback; // Hozzáadva
+import nje.gamf.speedyspoon.Repositories.UserLoginCallback;       // Hozzáadva
 
 public class MainActivity extends AppCompatActivity {
 
     private MenuItemRepository menuItemRepository;
     private RestaurantRepository restaurantRepository;
+    private UserRepository userRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +79,96 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onError(DatabaseError error) {
                 Log.w("testing", "Failed to read restaurants", error.toException());
+            }
+        });
+
+        // UserRepository tesztelése
+        userRepository = new UserRepository();
+
+        // Teszt felhasználó regisztrációja
+        User testUser = new User("testuser@example.com", null, "password123", "123456789", "Test User");
+        userRepository.registerUser(testUser, new UserRegistrationCallback() {
+            @Override
+            public void onRegistrationSuccess() {
+                Log.d("UserRepositoryTest", "Registration successful for: " + testUser.getEmail());
+
+                // Sikeres regisztráció után próbáljunk meg bejelentkezni
+                userRepository.loginUser(testUser.getEmail(), testUser.getPassword(), new UserLoginCallback() {
+                    @Override
+                    public void onLoginSuccess(User user) {
+                        Log.d("UserRepositoryTest", "Login successful for: " + user.getEmail());
+                    }
+
+                    @Override
+                    public void onLoginFailure(String errorMessage) {
+                        Log.e("UserRepositoryTest", "Login failed: " + errorMessage);
+                    }
+
+                    @Override
+                    public void onUserNotFound() {
+                        Log.e("UserRepositoryTest", "Login failed: User not found.");
+                    }
+
+                    @Override
+                    public void onIncorrectPassword() {
+                        Log.e("UserRepositoryTest", "Login failed: Incorrect password.");
+                    }
+                });
+            }
+
+            @Override
+            public void onRegistrationFailure(String errorMessage) {
+                Log.e("UserRepositoryTest", "Registration failed: " + errorMessage);
+            }
+
+            @Override
+            public void onUserAlreadyExists() {
+                Log.w("UserRepositoryTest", "Registration failed: User already exists - " + testUser.getEmail());
+                // Ha már létezik, próbáljunk meg bejelentkezni vele
+                userRepository.loginUser(testUser.getEmail(), "password123", new UserLoginCallback() {
+                    @Override
+                    public void onLoginSuccess(User user) {
+                        Log.d("UserRepositoryTest", "Login successful for existing user: " + user.getEmail());
+                    }
+
+                    @Override
+                    public void onLoginFailure(String errorMessage) {
+                        Log.e("UserRepositoryTest", "Login failed for existing user: " + errorMessage);
+                    }
+
+                    @Override
+                    public void onUserNotFound() {
+                        Log.e("UserRepositoryTest", "Login failed for existing user: User not found.");
+                    }
+
+                    @Override
+                    public void onIncorrectPassword() {
+                        Log.e("UserRepositoryTest", "Login failed for existing user: Incorrect password.");
+                    }
+                });
+            }
+        });
+
+        // Teszt bejelentkezés nem létező felhasználóval
+        userRepository.loginUser("nonexistent@example.com", "fakepass", new UserLoginCallback() {
+            @Override
+            public void onLoginSuccess(User user) {
+                Log.d("UserRepositoryTest", "Login successful (should not happen): " + user.getEmail());
+            }
+
+            @Override
+            public void onLoginFailure(String errorMessage) {
+                Log.e("UserRepositoryTest", "Login failed as expected for non-existent user: " + errorMessage);
+            }
+
+            @Override
+            public void onUserNotFound() {
+                Log.i("UserRepositoryTest", "Login correctly failed: User not found (nonexistent@example.com).");
+            }
+
+            @Override
+            public void onIncorrectPassword() {
+                Log.e("UserRepositoryTest", "Login failed as expected for non-existent user: Incorrect password.");
             }
         });
 

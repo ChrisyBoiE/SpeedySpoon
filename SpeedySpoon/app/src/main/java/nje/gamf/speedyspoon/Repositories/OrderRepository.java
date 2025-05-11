@@ -1,7 +1,5 @@
 package nje.gamf.speedyspoon.Repositories;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +28,9 @@ public class OrderRepository {
         orderDetailRef = database.getReference("orderDetails");
     }
 
+    /**
+     * Lekéri az összes rendelést
+     */
     public void fetchOrders(final OrderCallback callback) {
         orderRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -41,7 +42,6 @@ public class OrderRepository {
                         orders.add(order);
                     }
                 }
-                Log.d("testing", "Orders fetched: " + orders.size());
                 callback.onOrdersLoaded(orders);
             }
 
@@ -52,18 +52,26 @@ public class OrderRepository {
         });
     }
 
-    public void fetchOrderByUserId(final String userID, final OrderCallback callback) {
-        orderRef.orderByChild("userID").equalTo(userID).addValueEventListener(new ValueEventListener() {
+    /**
+     * Lekéri egy felhasználó rendeléseit az e-mail címe alapján
+     */
+    public void fetchOrderByEmail(final String email, final OrderCallback callback) {
+        orderRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Order> orders = new ArrayList<>();
+                
                 for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
                     Order order = orderSnapshot.getValue(Order.class);
                     if (order != null) {
-                        orders.add(order);
+                        String userID = order.getUserID();
+                        if (userID != null && userID.equals(email)) {
+                            order.setId(orderSnapshot.getKey());
+                            orders.add(order);
+                        }
                     }
                 }
-                Log.d("testing", "Orders fetched for user: " + orders.size());
+                
                 callback.onOrdersLoaded(orders);
             }
 
@@ -74,6 +82,9 @@ public class OrderRepository {
         });
     }
 
+    /**
+     * Lekéri egy rendelés részleteit a rendelés ID-ja alapján
+     */
     public void fetchOrderDetailByOrderId(final String orderID, final OrderCallback callback) {
         orderDetailRef.orderByChild("orderID").equalTo(orderID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -85,7 +96,6 @@ public class OrderRepository {
                         orderDetails.add(detail);
                     }
                 }
-                Log.d("testing", "Order details fetched: " + orderDetails.size());
                 callback.onOrderDetailsLoaded(orderDetails);
             }
 
@@ -96,6 +106,9 @@ public class OrderRepository {
         });
     }
 
+    /**
+     * Lekéri a rendelés státuszát
+     */
     public void fetchOrderStatus(final OrderCallback callback) {
         orderStatusRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -107,7 +120,6 @@ public class OrderRepository {
                         ordersStatus.add(status);
                     }
                 }
-                Log.d("testing", "Order statutes fetched: " + ordersStatus.size());
                 callback.onOrderStatusLoaded(ordersStatus);
             }
 

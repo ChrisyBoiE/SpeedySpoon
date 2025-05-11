@@ -3,6 +3,7 @@ package nje.gamf.speedyspoon.Models;
 import java.util.List;
 
 public class Order {
+    private String id;
     private String orderDate;
     private String status;
     private Integer totalAmount;
@@ -17,6 +18,14 @@ public class Order {
         this.totalAmount = totalAmount;
         this.orderDetails = orderDetails;
         this.userID = userID;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getOrderDate() {

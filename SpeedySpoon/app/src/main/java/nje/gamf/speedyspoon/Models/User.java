@@ -1,17 +1,19 @@
 package nje.gamf.speedyspoon.Models;
+
 import java.util.Map;
 
 public class User {
-
     private String email;
     private String password;
     private String phoneNumber;
     private String username;
     private Map<String, Order> orders;
 
+    // Kötelező üres konstruktor Firebaseserializáláshoz
     public User() {
     }
 
+    // Frissített konstruktor paraméterekkel
     public User(String email, String password, String phoneNumber, String username, Map<String, Order> orders) {
         this.email = email;
         this.password = password;
@@ -20,6 +22,7 @@ public class User {
         this.orders = orders;
     }
 
+    // Getterek és setterek
     public String getEmail() {
         return email;
     }

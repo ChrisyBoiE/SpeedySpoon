@@ -21,25 +21,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import nje.gamf.speedyspoon.Adapters.MenuItemAdapter;
-import nje.gamf.speedyspoon.Models.Category;
-import nje.gamf.speedyspoon.Models.MenuItem;
-import nje.gamf.speedyspoon.Models.Restaurant;
-import nje.gamf.speedyspoon.Repositories.CategoriesCallback;
-import nje.gamf.speedyspoon.Repositories.CategoriesRepository;
-import nje.gamf.speedyspoon.Repositories.MenuItemCallback;
-import nje.gamf.speedyspoon.Repositories.MenuItemRepository;
-import nje.gamf.speedyspoon.Repositories.RestaurantCallback;
-import nje.gamf.speedyspoon.Repositories.RestaurantRepository;
 
 public class MainActivity extends AppCompatActivity {
-
-    private MenuItemRepository menuItemRepository;
-    private RestaurantRepository restaurantRepository;
-    private CategoriesRepository categoriesRepository;
     private static final int RECOMMENDED_ITEM_COUNT = 4; // Maximum number of recommended items
 
     @Override
@@ -55,36 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Load recommended menu items
         loadRecommendedMenuItems();
-
-        // testing categories repo
-        categoriesRepository = new CategoriesRepository();
-
-        categoriesRepository.fetchCategories(new CategoriesCallback() {
-            @Override
-            public void onCategoriesLoaded(List<Category> categories) {
-                Log.d("testing", "categories loaded: " + categories.size());
-            }
-
-            @Override
-            public void onError(DatabaseError error) {
-                Log.w("testing", "Failed to read categories", error.toException());
-            }
-        });
-
-        // testing restaurant repo
-        restaurantRepository = new RestaurantRepository();
-
-        restaurantRepository.fetchRestaurants(new RestaurantCallback() {
-            @Override
-            public void onRestaurantsLoaded(List<Restaurant> restaurants) {
-                Log.d("testing", "restaurants loaded: " + restaurants.size());
-            }
-
-            @Override
-            public void onError(DatabaseError error) {
-                Log.w("testing", "Failed to read restaurants", error.toException());
-            }
-        });
 
         // Bottom navigation setup
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);

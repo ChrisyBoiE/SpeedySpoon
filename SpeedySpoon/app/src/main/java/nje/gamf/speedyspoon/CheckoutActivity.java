@@ -250,7 +250,9 @@ public class CheckoutActivity extends AppCompatActivity {
                     "Feldolgozás alatt", // Initial status
                     totalAmount,
                     orderDetail,
-                    currentUser.getEmail() // Using email as userID
+                    currentUser.getEmail(), 
+                    restaurantId, 
+                    orderId       
             );
             
             // Set the order ID
@@ -303,4 +305,4 @@ public class CheckoutActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-} 
+}

@@ -63,7 +63,7 @@ public class RestaurantsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_restaurants);
 
         // Firebase inicializálása
-        menuItemsRef = FirebaseDatabase.getInstance().getReference("menuItems");
+        menuItemsRef = FirebaseDatabase.getInstance("https://speedyspoon-be378-default-rtdb.europe-west1.firebasedatabase.app/").getReference("menuItems");
         restaurantMenuItems = new HashMap<>();
 
         // A nézeteket inicializáljuk
@@ -89,6 +89,8 @@ public class RestaurantsActivity extends AppCompatActivity {
 
         // Keresés beállítása
         setupSearch();
+
+        // TEST: Add sample restaurant to Firebase
 
         // Éttermek betöltése
         loadRestaurants();
@@ -190,6 +192,7 @@ public class RestaurantsActivity extends AppCompatActivity {
                         restaurantMenuItems.get(restaurantId).add(menuItem.getCategory());
                     }
                 }
+                
                 // Éttermek betöltése a menüelemek után
                 loadRestaurantsData();
             }
@@ -197,7 +200,7 @@ public class RestaurantsActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(RestaurantsActivity.this, 
-                    "Hiba történt a menüelemek betöltése közben", 
+                    "Hiba történt a menüelemek betöltése közben: " + databaseError.getMessage(), 
                     Toast.LENGTH_SHORT).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -216,7 +219,7 @@ public class RestaurantsActivity extends AppCompatActivity {
             @Override
             public void onError(DatabaseError error) {
                 Toast.makeText(RestaurantsActivity.this, 
-                    "Hiba történt az éttermek betöltése közben", 
+                    "Hiba történt az éttermek betöltése közben: " + error.getMessage(), 
                     Toast.LENGTH_SHORT).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -317,4 +320,6 @@ public class RestaurantsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

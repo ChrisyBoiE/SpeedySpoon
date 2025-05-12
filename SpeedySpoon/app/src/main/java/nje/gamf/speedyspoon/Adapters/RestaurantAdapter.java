@@ -68,19 +68,52 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         // Alapértelmezett feliratok (Szállítási idő, minimum rendelés stb-stb)
         holder.restaurantDeliveryTime.setText("25-40 perc");
         int minOrder = restaurant.getMinimumOrder();
-        Log.d(TAG, "Setting minimum order for " + restaurant.getName() + ": " + minOrder);
         holder.restaurantMinOrder.setText("Min. rendelés: " + minOrder + " Ft");
         holder.restaurantDeliveryFee.setText("Kiszállítás: 500 Ft");
         
         // Éttermi kép betöltése a model alapján
-        String imageName = restaurant.getRestaurantImage();
-        imageName = imageName.replace(".jpg", "");
-        int imageResource = holder.itemView.getContext().getResources().getIdentifier(
-            imageName, "drawable", holder.itemView.getContext().getPackageName());
-        Glide.with(holder.itemView.getContext())
-                .load(imageResource)
+        try {
+            String imageName = restaurant.getRestaurantImage();
+            
+            // Ha nincs kép megadva, használjunk random képet a beépített erőforrásokból
+            if (imageName == null || imageName.isEmpty()) {
+                int randomImageIndex = random.nextInt(RESTAURANT_IMAGES.length);
+                int randomImageResource = RESTAURANT_IMAGES[randomImageIndex];
+                
+                Glide.with(holder.itemView.getContext())
+                    .load(randomImageResource)
+                    .centerCrop()
+                    .into(holder.restaurantImage);
+            } else {
+                imageName = imageName.replace(".jpg", "");
+                
+                int imageResource = holder.itemView.getContext().getResources().getIdentifier(
+                    imageName, "drawable", holder.itemView.getContext().getPackageName());
+                
+                if (imageResource != 0) {
+                    Glide.with(holder.itemView.getContext())
+                        .load(imageResource)
+                        .centerCrop()
+                        .into(holder.restaurantImage);
+                } else {
+                    // Ha nem található a kép, használjunk random képet
+                    int randomImageIndex = random.nextInt(RESTAURANT_IMAGES.length);
+                    int randomImageResource = RESTAURANT_IMAGES[randomImageIndex];
+                    
+                    Glide.with(holder.itemView.getContext())
+                        .load(randomImageResource)
+                        .centerCrop()
+                        .into(holder.restaurantImage);
+                }
+            }
+        } catch (Exception e) {
+            // Hiba esetén fallback kép
+            int randomImageIndex = random.nextInt(RESTAURANT_IMAGES.length);
+            Glide.with(holder.itemView.getContext())
+                .load(RESTAURANT_IMAGES[randomImageIndex])
                 .centerCrop()
                 .into(holder.restaurantImage);
+        }
 
         // Click listener for the entire item
         holder.itemView.setOnClickListener(v -> {
@@ -90,21 +123,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                 // Ensure restaurant ID is not null
                 String restaurantId = restaurant.getId();
                 if (restaurantId == null || restaurantId.isEmpty()) {
-                    // Use position in the list as a fallback (since restaurantIDs in Firebase might be restaurantID1, restaurantID2, etc.)
-                    try {
-                        for (Field field : restaurant.getClass().getDeclaredFields()) {
-                            Log.d(TAG, "Field: " + field.getName());
-                        }
-                    } catch (Exception e) {
-                        Log.e(TAG, "Error listing fields", e);
-                    }
-                    
-                    Log.w(TAG, "Restaurant ID is null, using position-based ID as fallback");
-                    restaurantId = "restaurantID" + (position + 1);
+                    restaurantId = "restaurant_" + (position + 1);
                     restaurant.setId(restaurantId);
                 }
                 
-                Log.d(TAG, "Starting RestaurantMenuActivity with restaurant: " + restaurant.getName() + ", ID: " + restaurantId);
                 intent.putExtra("restaurant", restaurant);
                 intent.putExtra("restaurantId", restaurantId); // Add ID as separate extra for safety
                 v.getContext().startActivity(intent);

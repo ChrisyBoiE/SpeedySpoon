@@ -12,29 +12,11 @@ public class Restaurant implements Serializable {
     private Map<String, Boolean> menuItems;
     private String name;
     private double rating;
-    
-    @PropertyName("restaurant_image")
     private String restaurantImage;
-    
-    @PropertyName("minimum_order")
-    private int minimum_order;
-    private String restaurant_id; 
+    private int minimumOrder;
 
+    // Üres konstruktor Firebase-hez szükséges
     public Restaurant() {
-        
-    }
-
-    public Restaurant(String id, String address, String cuisineType, String description, Map<String, Boolean> menuItems, String name, double rating, String restaurantImage, int minimum_order, String restaurant_id) { 
-        this.id = id;
-        this.address = address;
-        this.cuisineType = cuisineType;
-        this.description = description;
-        this.menuItems = menuItems;
-        this.name = name;
-        this.rating = rating;
-        this.restaurantImage = restaurantImage;
-        this.minimum_order = minimum_order;
-        this.restaurant_id = restaurant_id; 
     }
 
     public String getId() {
@@ -105,19 +87,11 @@ public class Restaurant implements Serializable {
 
     @PropertyName("minimum_order")
     public int getMinimumOrder() {
-        return minimum_order;
+        return minimumOrder;
     }
 
     @PropertyName("minimum_order")
-    public void setMinimumOrder(int minimum_order) {
-        this.minimum_order = minimum_order;
-    }
-
-    public String getRestaurant_id() {
-        return restaurant_id;
-    }
-
-    public void setRestaurant_id(String restaurant_id) {
-        this.restaurant_id = restaurant_id;
+    public void setMinimumOrder(int minimumOrder) {
+        this.minimumOrder = minimumOrder;
     }
 }

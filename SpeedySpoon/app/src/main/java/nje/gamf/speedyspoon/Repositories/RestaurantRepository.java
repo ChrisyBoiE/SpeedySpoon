@@ -21,7 +21,7 @@ public class RestaurantRepository {
     private static final String TAG = "RestaurantRepository"; // LOG azonosító
 
     public RestaurantRepository() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://speedyspoon-be378-default-rtdb.europe-west1.firebasedatabase.app/");
         restaurantsRef = database.getReference("restaurants");
     }
 

@@ -16,10 +16,11 @@ import nje.gamf.speedyspoon.Models.Order;
 import nje.gamf.speedyspoon.Models.OrderDetail;
 import nje.gamf.speedyspoon.Models.Status;
 
+// Repository a rendelések kezeléséhez az adatbázisban
 public class OrderRepository {
-    private DatabaseReference orderRef;
-    private DatabaseReference orderStatusRef;
-    private DatabaseReference orderDetailRef;
+    private DatabaseReference orderRef; // Rendelések referenciája
+    private DatabaseReference orderStatusRef; // Rendelés állapotok referenciája
+    private DatabaseReference orderDetailRef; // Rendelés részletek referenciája
 
     public OrderRepository(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -28,9 +29,28 @@ public class OrderRepository {
         orderDetailRef = database.getReference("orderDetails");
     }
 
-    /**
-     * Lekéri az összes rendelést
-     */
+    // Rendelés lekérése ID alapján
+    public void fetchOrderById(final String orderId, final OrderCallback callback) {
+        orderRef.child(orderId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Order> orders = new ArrayList<>();
+                Order order = dataSnapshot.getValue(Order.class);
+                if (order != null) {
+                    order.setId(dataSnapshot.getKey());
+                    orders.add(order);
+                }
+                callback.onOrdersLoaded(orders);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                callback.onError(databaseError);
+            }
+        });
+    }
+
+    // Összes rendelés lekérése
     public void fetchOrders(final OrderCallback callback) {
         orderRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -52,9 +72,7 @@ public class OrderRepository {
         });
     }
 
-    /**
-     * Lekéri egy felhasználó rendeléseit az e-mail címe alapján
-     */
+    // Felhasználó rendeléseinek lekérése email alapján
     public void fetchOrderByEmail(final String email, final OrderCallback callback) {
         orderRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -82,9 +100,7 @@ public class OrderRepository {
         });
     }
 
-    /**
-     * Lekéri egy rendelés részleteit a rendelés ID-ja alapján
-     */
+    // Rendelés részleteinek lekérése rendelés ID alapján
     public void fetchOrderDetailByOrderId(final String orderID, final OrderCallback callback) {
         orderDetailRef.orderByChild("orderID").equalTo(orderID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -106,9 +122,7 @@ public class OrderRepository {
         });
     }
 
-    /**
-     * Lekéri a rendelés státuszát
-     */
+    // Rendelés állapotának lekérése
     public void fetchOrderStatus(final OrderCallback callback) {
         orderStatusRef.addValueEventListener(new ValueEventListener() {
             @Override

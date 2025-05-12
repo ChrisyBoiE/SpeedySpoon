@@ -1,5 +1,7 @@
 package nje.gamf.speedyspoon.Adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +15,18 @@ import java.util.List;
 
 import nje.gamf.speedyspoon.Models.Order;
 import nje.gamf.speedyspoon.R;
+import nje.gamf.speedyspoon.SingleOrderDetailsActivity;
+import nje.gamf.speedyspoon.RestaurantsActivity;
 
-/**
- * Adapter a rendelések megjelenítéséhez a RecyclerView-ban
- */
+// Adapter a rendelések listázásához
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
-    private List<Order> orders;
+    private List<Order> orders; // Rendelések listája
 
     public OrderAdapter(List<Order> orders) {
         this.orders = orders;
     }
 
+    // Lista frissítése új rendelésekkel
     public void updateOrders(List<Order> newOrders) {
         this.orders = newOrders;
         notifyDataSetChanged();
@@ -46,10 +49,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
             Order order = orders.get(position);
 
-            // Rendelés számának beállítása
-            holder.orderNumber.setText("Rendelés #" + (position + 1));
+            // Rendelés azonosító megjelenítése
+            String orderId = order.getId();
+            if (orderId != null && !orderId.isEmpty()) {
+                holder.orderNumber.setText("Rendelés #" + orderId);
+            } else {
+                holder.orderNumber.setText("Rendelés #" + (position + 1));
+            }
             
-            // Rendelés státuszának beállítása
+            // Rendelés állapotának megjelenítése
             String status = order.getStatus();
             if (status != null && !status.isEmpty()) {
                 holder.orderStatus.setText(status);
@@ -57,10 +65,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 holder.orderStatus.setText("Ismeretlen");
             }
             
-            // Éttermi név beállítása (egyelőre statikus)
+            // Étterem neve megjelenítése
             holder.restaurantName.setText("Olasz Konyha");
             
-            // Rendelés dátumának beállítása
+            // Rendelés dátumának megjelenítése
             String date = order.getOrderDate();
             if (date != null && !date.isEmpty()) {
                 holder.orderDate.setText("Dátum: " + date);
@@ -68,14 +76,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 holder.orderDate.setText("Dátum: Ismeretlen");
             }
             
-            // Rendelés tételek számának beállítása
+            // Rendelés tételeinek számának megjelenítése
             int itemCount = 0;
             if (order.getOrderDetails() != null && order.getOrderDetails().getOrderDetails() != null) {
                 itemCount = order.getOrderDetails().getOrderDetails().size();
             }
             holder.orderItems.setText(itemCount + " tétel");
             
-            // Rendelés összegének beállítása
+            // Rendelés végösszegének megjelenítése
             Integer totalAmount = order.getTotalAmount();
             if (totalAmount != null) {
                 holder.orderTotal.setText("Összesen: " + totalAmount + " Ft");
@@ -85,7 +93,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             
             // Újrarendelés gomb kezelése
             holder.orderAgainButton.setOnClickListener(v -> {
-                // Megvalósítani, ha marad idő: Implement újrarendelés funkció
+                Context context = v.getContext();
+                Intent intent = new Intent(context, RestaurantsActivity.class);
+                context.startActivity(intent);
+            });
+            
+            // Rendelés részletei megjelenítése kattintásra
+            holder.itemView.setOnClickListener(v -> {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, SingleOrderDetailsActivity.class);
+                intent.putExtra("order_id", order.getId());
+                context.startActivity(intent);
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,14 +115,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         return orders != null ? orders.size() : 0;
     }
 
+    // ViewHolder a rendelés adatok megjelenítéséhez
     static class OrderViewHolder extends RecyclerView.ViewHolder {
-        TextView orderNumber;
-        TextView orderStatus;
-        TextView restaurantName;
-        TextView orderDate;
-        TextView orderItems;
-        TextView orderTotal;
-        Button orderAgainButton;
+        TextView orderNumber; // Rendelés száma
+        TextView orderStatus; // Rendelés állapota
+        TextView restaurantName; // Éttermi név
+        TextView orderDate; // Rendelés dátuma
+        TextView orderItems; // Tételek száma
+        TextView orderTotal; // Végösszeg
+        Button orderAgainButton; // Újrarendelés gomb
 
         OrderViewHolder(View itemView) {
             super(itemView);

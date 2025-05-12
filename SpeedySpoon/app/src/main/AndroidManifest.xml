@@ -26,6 +26,7 @@
         <activity android:name=".FavoritesActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".OrderDetailsActivity" />
+        <activity android:name=".SingleOrderDetailsActivity" />
         <activity android:name=".RestaurantMenuActivity" />
         <activity android:name=".CartActivity" />
         <activity android:name=".CheckoutActivity" />

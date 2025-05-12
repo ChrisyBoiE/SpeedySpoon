@@ -3,6 +3,7 @@ package nje.gamf.speedyspoon;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -25,13 +26,14 @@ import nje.gamf.speedyspoon.Models.User;
 import nje.gamf.speedyspoon.Repositories.OrderCallback;
 import nje.gamf.speedyspoon.Repositories.OrderRepository;
 
+// Activity a rendelések megjelenítéséhez
 public class OrderDetailsActivity extends AppCompatActivity implements OrderCallback {
-    private RecyclerView ordersRecyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private LinearLayout emptyOrdersLayout;
-    private OrderAdapter orderAdapter;
-    private OrderRepository orderRepository;
-    private List<Order> orders;
+    private RecyclerView ordersRecyclerView; // Rendelések listája
+    private SwipeRefreshLayout swipeRefreshLayout; // Húzásra frissítés
+    private LinearLayout emptyOrdersLayout; // Üres lista megjelenítése
+    private OrderAdapter orderAdapter; // Adapter a rendelésekhez
+    private OrderRepository orderRepository; // Rendelések kezelése
+    private List<Order> orders; // Rendelések listája
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +66,26 @@ public class OrderDetailsActivity extends AppCompatActivity implements OrderCall
         }
     }
 
+    // UI elemek inicializálása
     private void initializeViews() {
         try {
             ordersRecyclerView = findViewById(R.id.orders_recycler_view);
             swipeRefreshLayout = findViewById(R.id.swipe_refresh);
             emptyOrdersLayout = findViewById(R.id.empty_orders_layout);
+            
+            // Újrarendelés gomb kezelése
+            Button browseRestaurantsButton = findViewById(R.id.browse_restaurants_button);
+            browseRestaurantsButton.setOnClickListener(v -> {
+                Intent intent = new Intent(OrderDetailsActivity.this, RestaurantsActivity.class);
+                startActivity(intent);
+                finish();
+            });
         } catch (Exception e) {
             throw e;
         }
     }
 
+    // RecyclerView beállítása
     private void setupRecyclerView() {
         try {
             orderAdapter = new OrderAdapter(orders);
@@ -84,6 +96,7 @@ public class OrderDetailsActivity extends AppCompatActivity implements OrderCall
         }
     }
 
+    // Húzásra frissítés beállítása
     private void setupSwipeRefresh() {
         try {
             swipeRefreshLayout.setOnRefreshListener(this::loadOrders);
@@ -92,6 +105,7 @@ public class OrderDetailsActivity extends AppCompatActivity implements OrderCall
         }
     }
 
+    // Rendelések betöltése
     private void loadOrders() {
         try {
             User currentUser = MainActivity.getCurrentUser();
@@ -108,6 +122,7 @@ public class OrderDetailsActivity extends AppCompatActivity implements OrderCall
         }
     }
 
+    // Alsó navigáció beállítása
     private void setupBottomNavigation() {
         try {
             BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -139,6 +154,7 @@ public class OrderDetailsActivity extends AppCompatActivity implements OrderCall
         }
     }
 
+    // Callback a rendelések betöltéséhez
     @Override
     public void onOrdersLoaded(List<Order> orders) {
         try {
@@ -157,16 +173,17 @@ public class OrderDetailsActivity extends AppCompatActivity implements OrderCall
         }
     }
 
+    // Callback a rendelés állapotának betöltéséhez 
     @Override
     public void onOrderStatusLoaded(List<Status> orderStatus) {
-        // Nem használjuk ezt a callback-et
     }
 
+    // callback a rendelés részleteinek betöltéséhez 
     @Override
     public void onOrderDetailsLoaded(List<Detail> orderDetails) {
-        // Nem használjuk ezt a callback-et
     }
 
+    // Hiba kezeléshez callback
     @Override
     public void onError(DatabaseError error) {
         Toast.makeText(this, "Hiba történt: " + error.getMessage(), Toast.LENGTH_SHORT).show();

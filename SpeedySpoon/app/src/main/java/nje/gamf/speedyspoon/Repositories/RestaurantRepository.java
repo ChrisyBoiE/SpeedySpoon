@@ -15,15 +15,17 @@ import java.util.List;
 
 import nje.gamf.speedyspoon.Models.Restaurant;
 
+// Repository az éttermek kezeléséhez az adatbázisban
 public class RestaurantRepository {
-    private DatabaseReference restaurantsRef;
-    private static final String TAG = "RestaurantRepository";
+    private DatabaseReference restaurantsRef; // Éttermek referenciája
+    private static final String TAG = "RestaurantRepository"; // LOG azonosító
 
     public RestaurantRepository() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         restaurantsRef = database.getReference("restaurants");
     }
 
+    // Összes étterem lekérése
     public void fetchRestaurants(final RestaurantCallback callback) {
         restaurantsRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -34,7 +36,7 @@ public class RestaurantRepository {
                         String restaurantId = restaurantSnapshot.getKey();
                         Restaurant restaurant = restaurantSnapshot.getValue(Restaurant.class);
                         if (restaurant != null) {
-                            // Set the ID from the Firebase key
+                            // ID beállítása a Firebase kulcsból
                             restaurant.setId(restaurantId);
                             Log.d(TAG, "Restaurant loaded: " + restaurant.getName() + 
                                 " with ID: " + restaurantId + 
@@ -57,6 +59,7 @@ public class RestaurantRepository {
         });
     }
     
+    // Egy étterem lekérése ID alapján
     public void fetchRestaurantById(String restaurantId, final RestaurantCallback callback) {
         restaurantsRef.child(restaurantId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

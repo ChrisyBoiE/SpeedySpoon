@@ -18,12 +18,13 @@ public class Restaurant implements Serializable {
     
     @PropertyName("minimum_order")
     private int minimum_order;
+    private String restaurant_id; 
 
     public Restaurant() {
-        // Default constructor required for Firebase
+        
     }
 
-    public Restaurant(String id, String address, String cuisineType, String description, Map<String, Boolean> menuItems, String name, double rating, String restaurantImage, int minimum_order) {
+    public Restaurant(String id, String address, String cuisineType, String description, Map<String, Boolean> menuItems, String name, double rating, String restaurantImage, int minimum_order, String restaurant_id) { 
         this.id = id;
         this.address = address;
         this.cuisineType = cuisineType;
@@ -33,6 +34,7 @@ public class Restaurant implements Serializable {
         this.rating = rating;
         this.restaurantImage = restaurantImage;
         this.minimum_order = minimum_order;
+        this.restaurant_id = restaurant_id; 
     }
 
     public String getId() {
@@ -109,5 +111,13 @@ public class Restaurant implements Serializable {
     @PropertyName("minimum_order")
     public void setMinimumOrder(int minimum_order) {
         this.minimum_order = minimum_order;
+    }
+
+    public String getRestaurant_id() {
+        return restaurant_id;
+    }
+
+    public void setRestaurant_id(String restaurant_id) {
+        this.restaurant_id = restaurant_id;
     }
 }

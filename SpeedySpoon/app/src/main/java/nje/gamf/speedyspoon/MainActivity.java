@@ -49,7 +49,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         userRepository = new UserRepository();
-        showLoginScreen();
+        
+        // Check if we're coming from OrderSuccessActivity with the SHOW_HOME_SCREEN flag
+        boolean showHomeScreen = getIntent().getBooleanExtra("SHOW_HOME_SCREEN", false);
+        
+        if (showHomeScreen) {
+            // If the flag is present, directly show the home screen
+            Log.d("MainActivity", "SHOW_HOME_SCREEN flag detected, directly showing home screen");
+            showHomeScreen();
+        } else {
+            // Otherwise, show the login screen as usual
+            showLoginScreen();
+        }
     }
 
     // Bejelentkező képernyő megjelenítése

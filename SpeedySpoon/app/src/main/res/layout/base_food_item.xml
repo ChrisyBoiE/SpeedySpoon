@@ -83,6 +83,7 @@
             android:paddingTop="8dp"
             android:paddingBottom="4dp"
             android:layout_marginStart="24dp"
+            android:layout_marginEnd="40dp"
             app:layout_constraintStart_toEndOf="@+id/item_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_description"
@@ -93,32 +94,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
                 android:visibility="gone"
                 tools:visibility="visible">
 
                 <ImageButton
                     android:id="@+id/decrease_button"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:src="@drawable/btn_remove"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/decrease_quantity" />
 
                 <TextView
                     android:id="@+id/item_quantity"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:gravity="center"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/textPrimary"
                     tools:text="1" />
 
                 <ImageButton
                     android:id="@+id/increase_button"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:src="@drawable/btn_add"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/increase_quantity" />
@@ -128,11 +129,14 @@
                 android:id="@+id/cart_action_button"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
                 android:text="@string/add_to_cart"
                 android:textColor="@color/primary"
-                android:textSize="12sp"
+                android:textSize="10sp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:minWidth="0dp"
                 app:strokeColor="@color/primary"
                 tools:text="Kosárba" />
         </LinearLayout>
